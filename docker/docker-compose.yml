@@ -1,12 +1,68 @@
+version: '3.8'
+
 services:
   mlflow:
      build:
        context: .
        dockerfile: mlflow.dockerfile
-     restart: always
+     restart: unless-stopped
      ports:
      - "5000:5000"
      volumes:
-       - ./data/mlflow/artifacts:/artifacts
-       - ./data/mlflow/db:/mlflow
+       - mlflow_data:/artifacts
+       - mlflow_data:/db
+       
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    # networks:
+    #   - postgres
 
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin_container
+    restart: unless-stopped
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PASSWORD}
+      - PGADMIN_CONFIG_SERVER_MODE=${PGADMIN_SERVER_MODE}
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    # networks:
+    #   - postgres
+    depends_on:
+      - postgres
+      
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+    # networks:
+    #   - postgres
+    depends_on:
+      - postgres
+
+# networks:
+#   postgres:
+#     driver: bridge
+
+volumes:
+  postgres_data:
+  pgadmin_data:
+  grafana_data:
+  mlflow_data:
