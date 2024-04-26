@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "WAF_ML"
-version = "0.3.0"
+version = "0.4.0"
 description = "Web Application Firewall with ML analitycs module"
 authors = ["Aleksej Zhurin <2010zalex@gmail.com>"]
 packages = [{ include = "src"}]
@@ -17,7 +17,7 @@ pre-commit = "*"
 isort = "^5.12.0"
 flake8 = "^3.9.0"
 jupyter = "*"
-mypy = "^0.960"
+mypy = "^1.8.0"
 nbqa = "^0.5.9"
 autoflake = "*"
 pydocstyle = "^6.1.1"
@@ -28,6 +28,18 @@ matplotlib = "*"
 seaborn = "*"
 pandas = "~2.2"
 scikit-learn = "~1.4.2"
+mitm = "^1.5.0"
+pyshark = "^0.6"
+proxy = "^0.0.1"
+twisted = "^24.3.0"
+
+
+[tool.poetry.group.collector.dependencies]
+scapy = "^2.5.0"
+
+
+[tool.poetry.group.decision.dependencies]
+vllm = "^0.4.0.post1"
 
 [tool.nbqa.mutate]
 black = 1
