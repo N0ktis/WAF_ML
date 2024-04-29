@@ -44,11 +44,11 @@ class LLM_AnalyticsClass:
         self.tokenizer = AutoTokenizer.from_pretrained(
             self.config.prod_model, trust_remote_code=True
         )
-        self.model = AutoModelForCausalLM.from_pretrained(
-            self.config.codellama_13b_gptq,
-            torch_dtype=torch.bfloat16,
-            trust_remote_code=True,
-        )
+        # self.model = AutoModelForCausalLM.from_pretrained(
+        #     self.config.codellama_13b_gptq,
+        #     torch_dtype=torch.bfloat16,
+        #     trust_remote_code=True,
+        # )
         self.pipeline = pipeline(
             "text-generation",
             model=self.config.prod_model,
@@ -131,7 +131,6 @@ class LLM_AnalyticsClass:
         for i in range(self.config.n_tries):
 
             gen = self.generate(msg)
-            print(gen)
             prediction = gen[0]["generated_text"][2]["content"]  # type: ignore
             prediction = "".join(prediction.lower().split())
 
