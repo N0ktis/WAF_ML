@@ -115,7 +115,7 @@ class LLM_AnalyticsClass:
         )
         return result
 
-    def pred(self, input_data: str) -> Tuple[Optional[str], int]:
+    def pred(self, input_data: str) -> Tuple[Optional[int], int]:
         """
         Predict anomaly of input HTTP-request
 
@@ -135,6 +135,9 @@ class LLM_AnalyticsClass:
             prediction = "".join(prediction.lower().split())
 
             if self.__check_answer_template(prediction):
-                return prediction, i
+                if prediction[0][1:-1]=='no':
+                    return 0, i
+                else:
+                    return 1, i
 
         return None, i
