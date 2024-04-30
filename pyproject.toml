@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "WAF_ML"
 version = "0.6.0"
-description = "Web Application Firewall with ML analitycs module"
+description = "Web Application Firewall with ML analytics module"
 authors = ["Aleksej Zhurin <2010zalex@gmail.com>"]
 packages = [{ include = "src"}]
 
