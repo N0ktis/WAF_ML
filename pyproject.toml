@@ -1,15 +1,16 @@
 [tool.poetry]
 name = "WAF_ML"
-version = "0.4.0"
+version = "0.6.0"
 description = "Web Application Firewall with ML analitycs module"
 authors = ["Aleksej Zhurin <2010zalex@gmail.com>"]
 packages = [{ include = "src"}]
 
 [tool.poetry.dependencies]
-python = "3.10.12"
+python = "3.10.11"
 joblib = "*"
 tqdm = "*"
 rich = "^10.4.0"
+torch = {version = "2.2.2", source = "pytorch-gpu-src"}
 
 [tool.poetry.group.dev.dependencies]
 black = "^22.3.0"
@@ -32,14 +33,30 @@ mitm = "^1.5.0"
 pyshark = "^0.6"
 proxy = "^0.0.1"
 twisted = "^24.3.0"
+plotly = "^5.21.0"
+kaleido = "0.2.1"
+peft = "^0.10.0"
 
 
-[tool.poetry.group.collector.dependencies]
+[tool.poetry.group.collector_module.dependencies]
 scapy = "^2.5.0"
 
 
-[tool.poetry.group.decision.dependencies]
-vllm = "^0.4.0.post1"
+[tool.poetry.group.analytics_module.dependencies]
+torch = {version = "2.2.2+cu118", source = "pytorch-gpu-src"}
+optimum = "^1.19.1"
+transformers = "^4.40.1"
+auto-gptq = {version = "^0.7.1+cu118", source = "auto_gptq_src"}
+
+[[tool.poetry.source]]
+name = "auto_gptq_src"
+url = "https://huggingface.github.io/autogptq-index/whl/cu118/"
+priority = "explicit"
+
+[[tool.poetry.source]]
+name = "pytorch-gpu-src"
+url = "https://download.pytorch.org/whl/cu118"
+priority = "explicit"
 
 [tool.nbqa.mutate]
 black = 1
